@@ -1,4 +1,5 @@
 <?php
+	// Connect to Local Database
 	$db = mysqli_connect('127.0.0.1','root','M@c1nt0$h','globalhack')
 	or die('Error connecting to MySQL server.');
  ?>
@@ -18,22 +19,24 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script>
 			$(document).ready(function(){
+				$("#submit").hide();
+
 				$("#addStry").click(function(){
-					$(".footer").animate({
-						height: "toggle"
-					});
+					$("#info").toggle();
+					$("#submit").toggle();
 				});
 			});
 		</script>
 	</head>
 	<body>
 
+		<!--White Header with Logo-->
 		<div id="header">
 			<img src="../logo.png" style="height: 80%;">
 		</div>
 
 		<div id="sidebar">
-			<button id="addStry" type="button" class="btn btn-primary btn-lg btn-block">Add your story</button>
+			<button id="addStry" type="button" class="btn btn-success btn-lg btn-block" style="font-size: 14pt;">Submit Your Story</button>
 
 			<br>
 			<div class="pac-card" id="pac-card">
@@ -65,21 +68,35 @@
 					}
 				?>
 				<b><h2><?php echo $sideName ?></h2></b>
-				<p><small id="sidePlace0"><?php echo $sidePlace0; ?></small><small> to </small><small id="sidePlace1"><?php echo $sidePlace1; ?></small></p>
+				<p><small id="sidePlace0"><?php echo $sidePlace0; ?></small><small><?php if($sidePlace0!=NULL&&$sidePlace1!=NULL){echo " to ";} ?></small><small id="sidePlace1"><?php echo $sidePlace1; ?></small></p>
 				<p><?php echo $sideText ?></p>
 			</div>
 		</div>
-		<div id="map"></div>
-		<div class="footer">
-			<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" style="padding: 0 10pt;">
-				<div class="form-check form-check-inline" style="margin: 10pt 0;">
-					<input class="form-control" type="text" name="name" placeholder="Name" style="margin-right: 5pt;">
 
-					<input id="origin-input" class="controls form-control" type="text" placeholder="Origin" name="origin" style="margin-right: 5pt;">
-					<input id="destination-input" class="controls form-control" type="text" placeholder="Destination" name="destination" style="margin-right: 5pt;">
-					<button type="submit" class="btn btn-primary">Submit</button>
+		<div id="map"></div>
+
+		<div class="container">
+			<div id="info" class="row" style="padding: 10pt;font-size: 11pt;">
+				<div class="col-lg">
+					<h1 style="font-size: 22pt;">About</h1>
+					<p>By sharing stories between existing communities and immigrants, The United Compass project aims to capture experiences so we can begin to emphasize and appreciate the diverse journeys people take to build better lives for their families and themselves. Produced for St. Louis Global Hack 7.</p>
 				</div>
-				<input class="form-control" type="text" name="story" placeholder="Submit your Story" style="margin-bottom: 10pt; height: 10vh;">
+
+				<div class="col-lg">
+					<h1 style="font-size: 22pt;">Privacy</h1>
+					<p>Personally identifiable information will not be collected, and we value our participant’s privacy. Providing only your first name name or “anonymous”, origination and destination of your journey, and comments is only used to create a submission onto the world map.</p>
+				</div>
+			</div>
+			<form id="submit" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" style="padding: 0 10pt; width: 100%">
+				<div class="form-check form-check-inline" style="margin: 10pt 0;width: 100%;">
+					<input class="form-control" type="text" name="name" placeholder="Name" style="margin-right: 5pt;">
+					<div style="float: right;" class="form-check form-check-inline">
+						<input id="origin-input" class="controls form-control" type="text" placeholder="Origin" name="origin" style="margin-right: 5pt;width: 20vw">
+						<input id="destination-input" class="controls form-control" type="text" placeholder="Destination" name="destination" style="margin-right: 5pt;width: 20vw">
+						<button type="submit" class="btn btn-success">Share Your Story</button>
+					</div>
+				</div>
+				<input class="form-control" type="text" name="story" placeholder="I live here because..." style="margin-bottom: 10pt; height: 10vh;">
 			</form>
 		</div>
 		<?php
@@ -200,23 +217,21 @@
 				});
 
 				var geocoder = new google.maps.Geocoder();
-				geocodeAddress(geocoder, map);
-			}
 
-			function geocodeAddress(geocoder, resultsMap) {
 				var flightPlanCoordinates1 = [];
 				var sidePlace0 = document.getElementById('sidePlace0').innerHTML;
 				var sidePlace1 = document.getElementById('sidePlace1').innerHTML;
 				geocoder.geocode({'address': sidePlace0}, function(results, status) {
 					if (status === 'OK') {
 						flightPlanCoordinates1[0] = results[0].geometry.location;
-						var marker = new google.maps.Marker({map: resultsMap, position: results[0].geometry.location});
+						var marker = new google.maps.Marker({map: map, position: results[0].geometry.location});
 					}
 				});
+				
 				geocoder.geocode({'address': sidePlace1}, function(results, status) {
 					if (status === 'OK') {
 						flightPlanCoordinates1[1] = results[0].geometry.location;
-						var marker1 = new google.maps.Marker({map: resultsMap, position: results[0].geometry.location});
+						var marker1 = new google.maps.Marker({map: map, position: results[0].geometry.location});
 
 						var flightPath1 = new google.maps.Polyline({
 						path: flightPlanCoordinates1,
@@ -229,11 +244,9 @@
 						flightPath1.setMap(map);
 					}
 				});
-	  		}
+			}
 		</script>
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJW6mJh2HviSTKbwQ3npzDcAoZR4C-je4&libraries=places&callback=initMap"
-				async defer></script>
-
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJW6mJh2HviSTKbwQ3npzDcAoZR4C-je4&libraries=places&callback=initMap" async defer></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 		<script src='../js/bootstrap.min.js'></script>
 	</body>
