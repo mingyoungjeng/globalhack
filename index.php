@@ -13,9 +13,6 @@
 		<link href='../css/style.css' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href='../css/bootstrap.min.css'>
 
-		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css">
-		<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
-
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script>
 			$(document).ready(function(){
@@ -32,7 +29,7 @@
 
 		<!--White Header with Logo-->
 		<div id="header">
-			<img src="../logo.png" style="height: 80%;">
+			<img src="../img/logo.png" style="height: 80%;">
 		</div>
 
 		<div id="sidebar">
@@ -75,16 +72,22 @@
 
 		<div id="map"></div>
 
-		<div class="container">
-			<div id="info" class="row" style="padding: 10pt;font-size: 11pt;">
-				<div class="col-lg">
-					<h1 style="font-size: 22pt;">About</h1>
+		<div>
+			<div id="info" class="row" style="padding: 10pt;font-size: 10pt;">
+				<div class="col-sm">
+					<h1 style="font-size: 18pt;">About</h1>
 					<p>By sharing stories between existing communities and immigrants, The United Compass project aims to capture experiences so we can begin to emphasize and appreciate the diverse journeys people take to build better lives for their families and themselves. Produced for St. Louis Global Hack 7.</p>
 				</div>
 
-				<div class="col-lg">
-					<h1 style="font-size: 22pt;">Privacy</h1>
+				<div class="col-sm">
+					<h1 style="font-size: 18pt;">Privacy</h1>
 					<p>Personally identifiable information will not be collected, and we value our participant’s privacy. Providing only your first name name or “anonymous”, origination and destination of your journey, and comments is only used to create a submission onto the world map.</p>
+				</div>
+				<div class="col">
+					<h1 style="font-size: 18pt;">Resources</h1>
+					<a href="https://www.american.edu/ocl/isss/visa-interview-tips.cfm">American.edu</a><br>
+					<a href="http://www.pewresearch.org/fact-tank/2018/02/26/key-facts-about-u-s-immigration-policies-and-proposed-changes/">PEW Research</a><br>
+					<a href="https://www.uscis.gov/sites/default/files/files/nativedocuments/M-618.pdf">USCIS</a><br>
 				</div>
 			</div>
 			<form id="submit" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" style="padding: 0 10pt; width: 100%">
