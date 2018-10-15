@@ -1,6 +1,6 @@
 <?php
 	// Connect to Local Database
-	$db = mysqli_connect('127.0.0.1','root','M@c1nt0$h','globalhack')
+	$db = mysqli_connect('localhost','root','lostintranslation','globalhack')
 	or die('Error connecting to MySQL server.');
  ?>
 
